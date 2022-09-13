@@ -1,0 +1,20 @@
+<body>
+  <script>
+    document.cookie = `s=1; secure=true; samesite=none; path=/;`;
+    (() => {
+      if (!window.parent) return;
+      const hasCookie = /s=1/.test(document.cookie);
+
+      let hasStorageAccess = true;
+      if (
+        document.hasStorageAccess &&
+        typeof document.hasStorageAccess === "function"
+      ) {
+        hasStorageAccess = document.hasStorageAccess();
+      }
+
+      const msg = hasCookie && hasStorageAccess ? "supported" : "unsupported";
+      window.parent.postMessage(msg, "*");
+    })();
+  </script>
+</body>
